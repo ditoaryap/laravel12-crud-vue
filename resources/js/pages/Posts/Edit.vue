@@ -9,19 +9,29 @@ import { Button } from '@/components/ui/button';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Posts Create',
+        title: 'Posts Edit',
         href: '/posts/create',
     },
 ];
 
+
+
+const props = defineProps({
+    post: {
+        type: Object,
+        default: () => ({ title: '', body: '' })
+    }
+});
+
 const form = useForm({
-    title: "",
-    body: "",
-})
+    title: props.post.title || "",
+    body: props.post.body || "",
+});
 
 function submit() {
-    form.post(route(`posts.store`), {
+    form.put(route(`posts.store`), {
         preserveScroll: true,
+
         onSuccess: () => form.reset()
     });
 }
@@ -29,7 +39,7 @@ function submit() {
 </script>
 
 <template>
-    <Head title="Posts Create" />
+    <Head title="Posts Edit" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
@@ -66,7 +76,7 @@ function submit() {
                 </div>
 
                 <div class="flex items-center gap-4 mt-3">
-                    <Button>Submit</Button>
+                    <Button>Update</Button>
                 </div>
 
 
